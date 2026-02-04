@@ -4,312 +4,1296 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-  <title>Portfólio — Wesley Silva</title>
-  <meta name="description" content="Portfólio onepage de Analista de Sistemas" />
+  <title>Wesley Silva — Analista de Sistemas</title>
+  <meta name="description" content="Portfólio de Wesley Silva - Especialista em ERP, Integrações e Automação" />
+  
+  <!-- Fontes distintivas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    html { scroll-behavior: smooth; }
+    :root {
+      --primary: #00d9ff;
+      --primary-dark: #0099cc;
+      --secondary: #ff6b35;
+      --accent: #ffd700;
+      --dark: #0a0e27;
+      --dark-light: #1a1f3a;
+      --text: #e8eaf6;
+      --text-dim: #9ca3af;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Background animado com mesh gradient */
+    .bg-animated {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: 
+        radial-gradient(ellipse at 20% 0%, rgba(0, 217, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 40% 100%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+        linear-gradient(180deg, #0a0e27 0%, #1a1f3a 100%);
+      animation: meshMove 20s ease-in-out infinite;
+    }
+
+    @keyframes meshMove {
+      0%, 100% { filter: hue-rotate(0deg); }
+      50% { filter: hue-rotate(15deg); }
+    }
+
+    /* Noise texture overlay */
+    .noise-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    /* Tipografia única */
+    .title-display {
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 0.05em;
+      line-height: 0.9;
+      text-transform: uppercase;
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Header glassmorphism */
+    .glass-header {
+      background: rgba(10, 14, 39, 0.8);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Cursor personalizado */
+    @media (hover: hover) {
+      body {
+        cursor: none;
+      }
+
+      .cursor-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--primary);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        mix-blend-mode: difference;
+        transition: transform 0.15s ease;
+      }
+
+      .cursor-ring {
+        width: 40px;
+        height: 40px;
+        border: 2px solid var(--primary);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 9998;
+        transition: all 0.2s ease;
+        mix-blend-mode: difference;
+      }
+
+      a:hover ~ .cursor-ring,
+      button:hover ~ .cursor-ring {
+        transform: scale(1.5);
+        border-color: var(--secondary);
+      }
+    }
+
+    /* Menu mobile slide */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 280px;
+      height: 100vh;
+      background: rgba(26, 31, 58, 0.98);
+      backdrop-filter: blur(20px);
+      transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      z-index: 100;
+      padding: 80px 30px 30px;
+      box-shadow: -10px 0 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .mobile-menu.active {
+      right: 0;
+    }
+
+    .mobile-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 99;
+    }
+
+    .mobile-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Hamburger animado */
+    .hamburger {
+      width: 28px;
+      height: 20px;
+      position: relative;
+      cursor: pointer;
+      z-index: 101;
+    }
+
+    .hamburger span {
+      display: block;
+      position: absolute;
+      height: 3px;
+      width: 100%;
+      background: var(--primary);
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger span:nth-child(1) {
+      top: 0;
+    }
+
+    .hamburger span:nth-child(2) {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .hamburger span:nth-child(3) {
+      bottom: 0;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg);
+      top: 50%;
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg);
+      bottom: 50%;
+    }
+
+    /* Cards com bevel e sombras */
+    .card-premium {
+      background: linear-gradient(135deg, rgba(26, 31, 58, 0.9) 0%, rgba(26, 31, 58, 0.6) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .card-premium::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .card-premium:hover {
+      transform: translateY(-10px) scale(1.02);
+      border-color: rgba(0, 217, 255, 0.3);
+      box-shadow: 
+        0 20px 60px rgba(0, 217, 255, 0.15),
+        0 0 0 1px rgba(0, 217, 255, 0.1);
+    }
+
+    .card-premium:hover::before {
+      opacity: 1;
+    }
+
+    /* Tags com efeito holográfico */
+    .tag {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .tag::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transform: rotate(45deg);
+      transition: all 0.5s;
+    }
+
+    .tag:hover::before {
+      left: 100%;
+    }
+
+    .tag:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(0, 217, 255, 0.3);
+    }
+
+    /* Botões com gradiente animado */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: var(--dark);
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 217, 255, 0.3);
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 30px rgba(0, 217, 255, 0.5);
+    }
+
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      color: var(--text);
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 217, 255, 0.2);
+    }
+
+    /* Animações de entrada */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeInRight {
+      from {
+        opacity: 0;
+        transform: translateX(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    .animate-on-scroll {
+      opacity: 0;
+    }
+
+    .animate-on-scroll.visible {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    /* Imagem com efeito de inclinação */
+    .profile-img-container {
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-img-container:hover {
+      transform: perspective(1000px) rotateY(5deg) rotateX(5deg);
+    }
+
+    .profile-img {
+      border-radius: 20px;
+      border: 3px solid rgba(0, 217, 255, 0.3);
+      box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .profile-img-container:hover .profile-img {
+      box-shadow: 
+        0 40px 100px rgba(0, 217, 255, 0.3),
+        0 0 60px rgba(0, 217, 255, 0.2);
+      border-color: var(--primary);
+    }
+
+    /* Links com sublinhado animado */
+    .link-underline {
+      position: relative;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .link-underline::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transition: width 0.3s ease;
+    }
+
+    .link-underline:hover::after {
+      width: 100%;
+    }
+
+    .link-underline:hover {
+      color: var(--primary);
+    }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .scroll-indicator::before {
+      content: '';
+      width: 2px;
+      height: 40px;
+      background: linear-gradient(180deg, transparent, var(--primary));
+      display: block;
+      margin: 0 auto 8px;
+    }
+
+    /* Section dividers */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.3), transparent);
+      margin: 60px 0;
+    }
+
+    /* Badge flutuante */
+    .floating-badge {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 30px;
+      background: rgba(0, 217, 255, 0.1);
+      border: 1px solid rgba(0, 217, 255, 0.3);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--primary);
+      backdrop-filter: blur(10px);
+      animation: fadeInUp 0.6s ease;
+    }
+
+    .floating-badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 10px var(--primary);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.5;
+        transform: scale(1.2);
+      }
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .title-display {
+        font-size: 2.5rem !important;
+        line-height: 1.1;
+      }
+
+      .card-premium {
+        padding: 20px;
+      }
+
+      .profile-img-container {
+        display: none;
+      }
+    }
+
+    /* Efeito de partículas no background (sutil) */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: particleFloat 20s linear infinite;
+    }
+
+    @keyframes particleFloat {
+      0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.3;
+      }
+      90% {
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-100px) translateX(100px);
+        opacity: 0;
+      }
+    }
+
+    /* Project search input */
+    .search-input {
+      background: rgba(26, 31, 58, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      padding: 14px 24px;
+      color: var(--text);
+      width: 100%;
+      max-width: 400px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1), 0 4px 20px rgba(0, 217, 255, 0.2);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-dim);
+    }
+
+    /* Subtle glow on hover for interactive elements */
+    .glow-on-hover {
+      transition: filter 0.3s ease;
+    }
+
+    .glow-on-hover:hover {
+      filter: drop-shadow(0 0 10px rgba(0, 217, 255, 0.5));
+    }
   </style>
 </head>
-<body class="bg-gradient-to-br from-slate-950 via-slate-900 to-black text-slate-100">
+<body>
+  <!-- Cursor customizado (apenas desktop) -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <!-- Background animado -->
+  <div class="bg-animated"></div>
+  <div class="noise-overlay"></div>
+
+  <!-- Partículas sutis -->
+  <div class="particles" id="particles"></div>
+
   <!-- Header -->
-  <header class="sticky top-0 z-40 backdrop-blur bg-slate-950/70 border-b border-white/10">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <a class="text-lg font-semibold tracking-tight" href='#apresentacao'>Wesley Silva</a>
-      </div>
-      <nav class="hidden sm:flex gap-4 text-sm">
-        <a href="#apresentacao" class="opacity-80 hover:opacity-100">Apresentação</a>
-        <a href="#portfolio" class="opacity-80 hover:opacity-100">Portfólio</a>
-        <a href="#formacao" class="opacity-80 hover:opacity-100">Formação</a>
-        <a href="#experiencias" class="opacity-80 hover:opacity-100">Experiências</a>
-        <a href="#projetos" class="opacity-80 hover:opacity-100">Projetos</a>
+  <header class="glass-header fixed top-0 w-full z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#home" class="text-x1 font-bold title-display text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 glow-on-hover">
+        Wesley Silva
+      </a>
+
+      <!-- Menu Desktop -->
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="#sobre" class="link-underline text-sm font-medium">Sobre</a>
+        <a href="#habilidades" class="link-underline text-sm font-medium">Habilidades</a>
+        <a href="#formacao" class="link-underline text-sm font-medium">Formação</a>
+        <a href="#experiencias" class="link-underline text-sm font-medium">Experiências</a>
+        <a href="#projetos" class="link-underline text-sm font-medium">Projetos</a>
+        <a href="#contato" class="btn-primary text-sm">Contato</a>
       </nav>
+
+      <!-- Menu Mobile Button -->
+      <button class="md:hidden hamburger" id="menuToggle" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </header>
 
-  <!-- Hero / Apresentação -->
-  <section id="apresentacao" class="relative overflow-hidden">
-    <div class="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
-    <div class="absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-cyan-400/10 blur-3xl"></div>
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-overlay" id="mobileOverlay"></div>
 
-    <div class="max-w-7xl mx-auto px-4 py-20 grid gap-10 md:grid-cols-2 items-center">
-      <div>
-        <span class="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-3 py-1 text-xs">Pós-graduação em IA para Desenvolvedores (em andamento)</span>
-        <h2 class="mt-4 text-4xl md:text-5xl font-bold leading-tight">
-          Wesley Silva<br> Analista de Sistemas focado em <span class="text-indigo-400">ERP</span>, <span class="text-cyan-300">Integrações</span> e <span class="text-orange-300">Automação</span>
-        </h2>
-        <p class="mt-4 text-slate-300 leading-relaxed">
-          Experiência com Protheus (ADVPL), integrações REST/JSON, bancos SQL (SQLite e SQL Server) e automação de processos.
-          Infraestrutura em nível intermediário. Transformo rotinas manuais em fluxos rápidos e confiáveis.
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <nav class="flex flex-col gap-6">
+      <a href="#sobre" class="link-underline text-lg font-medium menu-link">Sobre</a>
+      <a href="#habilidades" class="link-underline text-lg font-medium menu-link">Habilidades</a>
+      <a href="#formacao" class="link-underline text-lg font-medium menu-link">Formação</a>
+      <a href="#experiencias" class="link-underline text-lg font-medium menu-link">Experiências</a>
+      <a href="#projetos" class="link-underline text-lg font-medium menu-link">Projetos</a>
+      <div class="mt-4">
+        <a href="#contato" class="btn-primary w-full justify-center menu-link">Entrar em Contato</a>
+      </div>
+    </nav>
+
+    <div class="mt-12 pt-8 border-t border-white/10">
+      <p class="text-sm text-gray-400 mb-4">Conecte-se</p>
+      <div class="flex gap-4">
+        <a href="https://github.com/Wesley-FS" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-colors">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/wesley-fs/" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-colors">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section id="home" class="relative min-h-screen flex items-center pt-20 pb-20 px-6">
+    <div class="max-w-7xl mx-auto w-full">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <!-- Conteúdo -->
+        <div class="animate-on-scroll">
+          <div class="floating-badge mb-6">
+            Pós-graduação em IA para Desenvolvedores
+          </div>
+          
+          <h1 class="title-display text-5xl md:text-7xl mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">
+            Wesley Silva
+          </h1>
+          
+          <p class="text-2xl md:text-3xl font-light mb-4 text-gray-300">
+            Analista de Sistemas
+          </p>
+          
+          <p class="text-lg text-gray-400 mb-6 leading-relaxed">
+            Especialista em <span class="text-cyan-400 font-semibold">ERP</span>, 
+            <span class="text-blue-400 font-semibold">Integrações</span> e 
+            <span class="text-purple-400 font-semibold">Automação</span>
+          </p>
+          
+          <p class="text-base text-gray-400 mb-8 leading-relaxed max-w-xl">
+            Transformo processos complexos em soluções eficientes usando Protheus (ADVPL), 
+            integrações REST/JSON, bancos SQL e automação inteligente. 
+            Experiência sólida em infraestrutura e gestão de sistemas ERP.
+          </p>
+
+          <div class="flex flex-wrap gap-4 mb-8">
+            <a href="#projetos" class="btn-primary">
+              Ver Projetos
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+              </svg>
+            </a>
+            <a href="#contato" class="btn-secondary">
+              Entrar em Contato
+            </a>
+          </div>
+
+          <div class="flex gap-6 items-center">
+            <a href="https://github.com/Wesley-FS" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-colors glow-on-hover">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/wesley-fs/" target="_blank" class="text-gray-400 hover:text-cyan-400 transition-colors glow-on-hover">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+            <a href="mailto:wesleyferrari123@gmail.com" class="text-gray-400 hover:text-cyan-400 transition-colors glow-on-hover">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Imagem do perfil (oculta no mobile) -->
+        <div class="hidden md:block animate-on-scroll profile-img-container">
+          <img src="img/perfil.jpg" alt="Wesley Silva" class="profile-img w-full max-w-md mx-auto object-cover aspect-square">
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator hidden md:block">
+      <span class="text-xs text-gray-500 mono">Scroll</span>
+    </div>
+  </section>
+
+  <!-- Sobre Section -->
+  <section id="sobre" class="py-20 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="section-divider mb-16"></div>
+      
+      <div class="max-w-4xl mx-auto text-center animate-on-scroll">
+        <h2 class="title-display text-4xl md:text-5xl mb-6">Sobre Mim</h2>
+        <p class="text-lg text-gray-400 leading-relaxed">
+          Sou desenvolvedor apaixonado por tecnologia e automação, com foco em criar soluções que realmente 
+          fazem diferença no dia a dia das empresas. Minha experiência abrange desde desenvolvimento em ADVPL 
+          para ERP Protheus até integrações complexas e análise de dados. Busco constantemente aprimorar minhas 
+          habilidades em IA e desenvolvimento full-stack para entregar resultados cada vez mais inovadores.
         </p>
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a href="#projetos" class="inline-flex items-center gap-2 rounded-xl bg-indigo-500 px-5 py-3 text-sm font-medium hover:bg-indigo-400 transition">Ver projetos →</a>
-          <a href="#portfolio" class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm hover:bg-white/10 transition">Habilidades</a>
-        </div>
-        <div class="mt-6 flex gap-4 text-sm text-slate-300">
-          <a href="https://github.com/Wesley-FS" class="hover:underline">GitHub</a>
-          <a href="https://www.linkedin.com/in/wesley-fs/" class="hover:underline">LinkedIn</a>
-          <a href="mailto:wesleyfs7534@gmail.com" class="hover:underline">Email</a>
-        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Habilidades Section -->
+  <section id="habilidades" class="py-20 px-6 bg-gradient-to-b from-transparent to-black/20">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16 animate-on-scroll">
+        <h2 class="title-display text-4xl md:text-5xl mb-4">Habilidades</h2>
+        <p class="text-gray-400">Tecnologias e ferramentas que domino</p>
       </div>
 
-      <!-- Foto do perfil -->
-      <div class="relative">
-        <div class="aspect-square max-w-sm mx-auto rounded-3xl bg-gradient-to-br from-indigo-500/20 to-cyan-400/10 p-[1px]">
-          <div class="h-full w-full rounded-3xl bg-slate-900 border border-white/10 grid place-items-center overflow-hidden">
-            <!-- Substitua o src pela sua foto -->
-            <img src="img/perfil.jpg" alt="Foto de Wesley Silva" class="h-full w-full object-cover" />
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- ERP -->
+        <div class="card-premium animate-on-scroll" style="animation-delay: 0.1s;">
+          <div class="text-4xl mb-4">⚙️</div>
+          <h3 class="text-xl font-semibold mb-3">ERP</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag">Protheus</span>
+            <span class="tag">ADVPL</span>
+            <span class="tag">Korp</span>
+          </div>
+        </div>
+
+        <!-- Integrações -->
+        <div class="card-premium animate-on-scroll" style="animation-delay: 0.2s;">
+          <div class="text-4xl mb-4">🔗</div>
+          <h3 class="text-xl font-semibold mb-3">Integrações</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag">REST API</span>
+            <span class="tag">JSON</span>
+            <span class="tag">Webhook</span>
+            <span class="tag">PowerBI</span>
+          </div>
+        </div>
+
+        <!-- Banco de Dados -->
+        <div class="card-premium animate-on-scroll" style="animation-delay: 0.3s;">
+          <div class="text-4xl mb-4">🗄️</div>
+          <h3 class="text-xl font-semibold mb-3">Banco de Dados</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag">SQL Server</span>
+            <span class="tag">SQLite</span>
+            <span class="tag">Queries</span>
+          </div>
+        </div>
+
+        <!-- Infraestrutura -->
+        <div class="card-premium animate-on-scroll" style="animation-delay: 0.4s;">
+          <div class="text-4xl mb-4">🖥️</div>
+          <h3 class="text-xl font-semibold mb-3">Infraestrutura</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag">Suporte</span>
+            <span class="tag">Redes</span>
+            <span class="tag">Active Directory</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Portfólio / Skills -->
-  <section id="portfolio" class="border-y border-white/10 bg-white/5">
-    <div class="max-w-7xl mx-auto px-4 py-16">
-      <div class="flex items-end justify-between gap-4 flex-wrap">
-        <h3 class="text-2xl font-semibold">Habilidades</h3>
-        <p class="text-sm text-slate-400">Stack e áreas de domínio</p>
+  <!-- Formação Section -->
+  <section id="formacao" class="py-20 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="section-divider mb-16"></div>
+
+      <div class="text-center mb-16 animate-on-scroll">
+        <h2 class="title-display text-4xl md:text-5xl mb-4">Formação</h2>
+        <p class="text-gray-400">Educação e certificações</p>
       </div>
-      <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div class="group rounded-2xl bg-white/5 border border-white/10 p-5 transition hover:bg-white/10">
-          <p class="font-medium">ERP</p>
-          <span class="mt-2 inline-block text-xs rounded-full bg-indigo-500/15 border border-indigo-400/30 px-2 py-1">Protheus</span>
-          <span class="mt-2 inline-block text-xs rounded-full bg-indigo-500/15 border border-indigo-400/30 px-2 py-1">Korp</span>
 
-        </div>
-        <div class="group rounded-2xl bg-white/5 border border-white/10 p-5 transition hover:bg-white/10">
-          <p class="font-medium">Integrações</p>
-          <span class="mt-2 inline-block text-xs rounded-full bg-cyan-500/15 border border-cyan-400/30 px-2 py-1">REST / JSON</span>
-          <span class="mt-2 inline-block text-xs rounded-full bg-cyan-500/15 border border-cyan-400/30 px-2 py-1">Webhook</span>
-          <span class="mt-2 inline-block text-xs rounded-full bg-cyan-500/15 border border-cyan-400/30 px-2 py-1">PowerBI</span>
-
-
-        </div>
-        <div class="group rounded-2xl bg-white/5 border border-white/10 p-5 transition hover:bg-white/10">
-          <p class="font-medium">Banco de Dados</p>
-          <span class="mt-2 inline-block text-xs rounded-full bg-orange-500/15 border border-fuchsia-400/30 px-2 py-1">SQLite</span>
-          <span class="mt-2 inline-block text-xs rounded-full bg-orange-500/15 border border-fuchsia-400/30 px-2 py-1">SQL</span>
-        </div>
-
-        <div class="group rounded-2xl bg-white/5 border border-white/10 p-5 transition hover:bg-white/10">
-          <p class="font-medium">Infraestrutura</p>
-          <span class="mt-2 inline-block text-xs rounded-full bg-emerald-500/15 border border-emerald-400/30 px-2 py-1">Suporte</span>
-          <span class="mt-2 inline-block text-xs rounded-full bg-emerald-500/15 border border-emerald-400/30 px-2 py-1">Redes</span>
-          <span class="mt-2 inline-block text-xs rounded-full bg-emerald-500/15 border border-emerald-400/30 px-2 py-1">Active Directory</span>
-          <span class="mt-2 inline-block text-xs rounded-full bg-emerald-500/15 border border-emerald-400/30 px-2 py-1">Manutenção Hardware</span>
-          <span class="mt-2 inline-block text-xs rounded-full bg-emerald-500/15 border border-emerald-400/30 px-2 py-1">Linux</span>
-
-
-
-        </div>
-        <div class="group rounded-2xl bg-white/5 border border-white/10 p-5 transition hover:bg-white/10">
-          <p class="font-medium">Linguagens</p>
-          <span class="mt-2 inline-block text-xs rounded-full bg-purple-500/15 border border-purple-400/30 px-2 py-1">Python</span>
-          <span class="mt-2 inline-block text-xs rounded-full bg-purple-500/15 border border-purple-400/30 px-2 py-1">ADVPL</span>
-          <span class="mt-2 inline-block text-xs rounded-full bg-purple-500/15 border border-purple-400/30 px-2 py-1">C++</span>
-        </div>
-          <div class="group rounded-2xl bg-white/5 border border-white/10 p-5 transition hover:bg-white/10">
-          <p class="font-medium">Automações</p>
-          <span class="mt-2 inline-block text-xs rounded-full bg-pink-500/15 border border-pink-400/30 px-2 py-1">Pyautogui</span>
-          <span class="mt-2 inline-block text-xs rounded-full bg-pink-500/15 border border-pink-400/30 px-2 py-1">Selenium</span>
-          <span class="mt-2 inline-block text-xs rounded-full bg-pink-500/15 border border-pink-400/30 px-2 py-1">Web Scraping</span>
-
-
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Formação (timeline) -->
-  <section id="formacao">
-    <div class="max-w-7xl mx-auto px-4 py-16">
-      <h3 class="text-2xl font-semibold">Formação Acadêmica</h3>
-      <div class="mt-8 relative border-l border-white/10 pl-6 space-y-6">
-        <div class="relative">
-          <span class="absolute -left-[10px] top-1 h-3 w-3 rounded-full bg-indigo-400"></span>
-          <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
-            <p class="font-medium">Pós-graduação em Inteligência Artificial para Desenvolvedores</p>
-            <p class="text-sm text-slate-300 mt-1">Em andamento</p>
+      <div class="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+        <!-- Pós-graduação -->
+        <div class="card-premium animate-on-scroll" style="animation-delay: 0.1s;">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="text-3xl">🎓</div>
+            <div class="flex-1">
+              <h3 class="text-xl font-semibold mb-2">Pós-graduação em IA para Desenvolvedores</h3>
+              <p class="text-cyan-400 text-sm mb-2">Universidade Tuiuti do Paraná • 2025 — 2026</p>
+              <p class="text-gray-400 text-sm">Especialização focada em soluções práticas de IA aplicadas ao desenvolvimento de software.</p>
+            </div>
+          </div>
+          <div class="mt-4 pt-4 border-t border-white/10">
+            <span class="tag">Em andamento</span>
           </div>
         </div>
-        <div class="relative">
-          <span class="absolute -left-[10px] top-1 h-3 w-3 rounded-full bg-cyan-300"></span>
-          <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
-            <p class="font-medium">Análise e Desenvolvimento de Sistemas</p>
-            <p class="text-sm text-slate-300 mt-1">Graduação</p>
+
+        <!-- Tecnólogo -->
+        <div class="card-premium animate-on-scroll" style="animation-delay: 0.2s;">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="text-3xl">💻</div>
+            <div class="flex-1">
+              <h3 class="text-xl font-semibold mb-2">Análise e Desenvolvimento de Sistemas</h3>
+              <p class="text-cyan-400 text-sm mb-2">Universidade Estácio de Sá • 2023 — 2025</p>
+              <p class="text-gray-400 text-sm">Formação completa em desenvolvimento, bancos de dados, engenharia de software e gestão de projetos.</p>
+            </div>
+          </div>
+          <div class="mt-4 pt-4 border-t border-white/10">
+            <span class="tag">Concluído</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Experiências -->
-  <section id="experiencias">
-    <div class="max-w-7xl mx-auto px-4 py-16">
-      <div class="flex items-end justify-between gap-4 flex-wrap">
-        <h3 class="text-2xl font-semibold">Experiências</h3>
-        <p class="text-sm text-slate-400">Histórico profissional e principais impactos</p>
+  <!-- Experiências Section -->
+  <section id="experiencias" class="py-20 px-6 bg-gradient-to-b from-transparent to-black/20">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16 animate-on-scroll">
+        <h2 class="title-display text-4xl md:text-5xl mb-4">Experiências</h2>
+        <p class="text-gray-400">Trajetória profissional</p>
       </div>
 
-      <div class="mt-8 grid gap-4 md:grid-cols-2">
-        <!-- LC1 Contadores Associados -->
-        <div class="rounded-2xl bg-white/5 border border-white/10 p-5 hover:-translate-y-0.5 transition">
-          <div class="flex items-center justify-between gap-2">
-            <p class="font-medium">Analista Operacional Protheus</p>
-            <span class="text-xs rounded-full bg-indigo-500/15 border border-indigo-400/30 px-2 py-1">Atual</span>
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- J&S Embalagens -->
+        <div class="card-premium animate-on-scroll" style="animation-delay: 0.1s;">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h3 class="text-xl font-semibold mb-2">Analista de sistemas</h3>
+              <p class="text-cyan-400 text-sm">LC1 Contadores Associados</p>
+              <p class="text-gray-500 text-xs mono">mar/2025 — atualmente</p>
+            </div>
+            <span class="tag">Atual</span>
           </div>
-          <p class="text-sm text-slate-300 mt-1">LC1 Contadores Associados • mar/2025 — Presente • Curitiba/PR</p>
-          <ul class="mt-3 list-disc pl-5 text-sm text-slate-300 space-y-1">
-            <li>Atendimento e solução de demandas de usuários no ERP Protheus.</li>
-            <li>Integrações via API/REST e automação de rotinas.</li>
-            <li>Ajustes em banco de dados e correção de inconsistências.</li>
+          <ul class="space-y-2 text-sm text-gray-400 mb-4">
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 mt-1">▸</span>
+              <span>Suporte ao sistema ERP Protheus e desenvolvimento de customizações</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 mt-1">▸</span>
+              <span>Integrações e automações de processos operacionais</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 mt-1">▸</span>
+              <span>Gestão e análise de dados via SQL e PowerBI</span>
+            </li>
           </ul>
-          <div class="mt-3 flex flex-wrap gap-2">
-            <span class="text-xs rounded-full bg-white/10 px-2 py-1">Protheus</span>
-            <span class="text-xs rounded-full bg-white/10 px-2 py-1">APIs</span>
-            <span class="text-xs rounded-full bg-white/10 px-2 py-1">Desenvolvimento</span>
-            <span class="text-xs rounded-full bg-white/10 px-2 py-1">SQL</span>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag">ERP</span>
+            <span class="tag">ADVPL</span>
+            <span class="tag">SQL</span>
           </div>
         </div>
 
         <!-- A.T.I. BRASIL -->
-        <div class="rounded-2xl bg-white/5 border border-white/10 p-5 hover:-translate-y-0.5 transition">
-          <p class="font-medium">Analista de TI</p>
-          <p class="text-sm text-slate-300 mt-1">A.T.I. BRASIL • jun/2024 — mar/2025 • Curitiba/PR</p>
-          <ul class="mt-3 list-disc pl-5 text-sm text-slate-300 space-y-1">
-            <li>Suporte a usuários, manutenção de hardware e software.</li>
-            <li>Gerenciamento do sistema Protheus e migração para o ERP Korp.</li>
-            <li>Apoio a melhorias de processos internos.</li>
+        <div class="card-premium animate-on-scroll" style="animation-delay: 0.2s;">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h3 class="text-xl font-semibold mb-2">Analista de TI</h3>
+              <p class="text-cyan-400 text-sm">A.T.I. BRASIL</p>
+              <p class="text-gray-500 text-xs mono">jun/2024 — mar/2025</p>
+            </div>
+          </div>
+          <ul class="space-y-2 text-sm text-gray-400 mb-4">
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 mt-1">▸</span>
+              <span>Suporte a usuários, manutenção de hardware e software</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 mt-1">▸</span>
+              <span>Gerenciamento do sistema Protheus e migração para o ERP Korp</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 mt-1">▸</span>
+              <span>Apoio a melhorias de processos internos</span>
+            </li>
           </ul>
-          <div class="mt-3 flex flex-wrap gap-2">
-            <span class="text-xs rounded-full bg-white/10 px-2 py-1">Suporte</span>
-            <span class="text-xs rounded-full bg-white/10 px-2 py-1">Infra</span>
-            <span class="text-xs rounded-full bg-white/10 px-2 py-1">Processos</span>
-            <span class="text-xs rounded-full bg-white/10 px-2 py-1">SQL</span>
-            <span class="text-xs rounded-full bg-white/10 px-2 py-1">PowerBI</span>
-
-
+          <div class="flex flex-wrap gap-2">
+            <span class="tag">Suporte</span>
+            <span class="tag">Infra</span>
+            <span class="tag">PowerBI</span>
           </div>
         </div>
 
         <!-- MR Soluções -->
-        <div class="rounded-2xl bg-white/5 border border-white/10 p-5 hover:-translate-y-0.5 transition">
-          <p class="font-medium">Auxiliar de Suporte N1</p>
-          <p class="text-sm text-slate-300 mt-1">MR Soluções • abr/2024 — jun/2024 • Curitiba/PR</p>
-          <ul class="mt-3 list-disc pl-5 text-sm text-slate-300 space-y-1">
-            <li>Atendimento inicial, triagem de chamados e resolução básica.</li>
-            <li>Escalonamento e acompanhamento de incidentes.</li>
+        <div class="card-premium animate-on-scroll" style="animation-delay: 0.3s;">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h3 class="text-xl font-semibold mb-2">Auxiliar de Suporte N1</h3>
+              <p class="text-cyan-400 text-sm">MR Soluções</p>
+              <p class="text-gray-500 text-xs mono">abr/2024 — jun/2024</p>
+            </div>
+          </div>
+          <ul class="space-y-2 text-sm text-gray-400 mb-4">
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 mt-1">▸</span>
+              <span>Atendimento inicial, triagem de chamados e resolução básica</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 mt-1">▸</span>
+              <span>Escalonamento e acompanhamento de incidentes</span>
+            </li>
           </ul>
-          <div class="mt-3 flex flex-wrap gap-2">
-            <span class="text-xs rounded-full bg-white/10 px-2 py-1">Helpdesk</span>
-            <span class="text-xs rounded-full bg-white/10 px-2 py-1">Atendimento</span>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag">Helpdesk</span>
+            <span class="tag">Atendimento</span>
           </div>
         </div>
 
         <!-- Exército Brasileiro -->
-        <div class="rounded-2xl bg-white/5 border border-white/10 p-5 hover:-translate-y-0.5 transition">
-          <p class="font-medium">Cabo / Soldado</p>
-          <p class="text-sm text-slate-300 mt-1">Exército Brasileiro • mar/2021 — jan/2024 • Curitiba/PR</p>
-          <ul class="mt-3 list-disc pl-5 text-sm text-slate-300 space-y-1">
-            <li>Atuação em comunicações eletrônicas e suporte tecnológico.</li>
-            <li>Redes de computadores, gerenciamento de sistemas e manutenção.</li>
-            <li>Resolução de problemas sob pressão em ambientes críticos.</li>
+        <div class="card-premium animate-on-scroll" style="animation-delay: 0.4s;">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h3 class="text-xl font-semibold mb-2">Cabo / Soldado</h3>
+              <p class="text-cyan-400 text-sm">Exército Brasileiro</p>
+              <p class="text-gray-500 text-xs mono">mar/2021 — jan/2024</p>
+            </div>
+          </div>
+          <ul class="space-y-2 text-sm text-gray-400 mb-4">
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 mt-1">▸</span>
+              <span>Atuação em comunicações eletrônicas e suporte tecnológico</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 mt-1">▸</span>
+              <span>Redes de computadores, gerenciamento de sistemas e manutenção</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 mt-1">▸</span>
+              <span>Resolução de problemas sob pressão em ambientes críticos</span>
+            </li>
           </ul>
-          <div class="mt-3 flex flex-wrap gap-2">
-            <span class="text-xs rounded-full bg-white/10 px-2 py-1">Redes</span>
-            <span class="text-xs rounded-full bg-white/10 px-2 py-1">Sistemas</span>
-            <span class="text-xs rounded-full bg-white/10 px-2 py-1">Operações</span>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag">Redes</span>
+            <span class="tag">Sistemas</span>
+            <span class="tag">Operações</span>
           </div>
         </div>
 
         <!-- Administrativo -->
-        <div class="rounded-2xl bg-white/5 border border-white/10 p-5 hover:-translate-y-0.5 transition md:col-span-2">
-          <p class="font-medium">Assistente Administrativo</p>
-          <p class="text-sm text-slate-300 mt-1">Positivo Tecnologia (set/2019 — jul/2021) • Espro (mar/2018 — jul/2019) • Curitiba/PR</p>
-          <ul class="mt-3 list-disc pl-5 text-sm text-slate-300 space-y-1">
-            <li>Rotinas administrativas, controladoria e apoio financeiro.</li>
-            <li>Organização de processos e documentação.</li>
-            <li>Trabalho em equipe e visão organizacional.</li>
+        <div class="card-premium animate-on-scroll md:col-span-2" style="animation-delay: 0.5s;">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h3 class="text-xl font-semibold mb-2">Assistente Administrativo</h3>
+              <p class="text-cyan-400 text-sm">Positivo Tecnologia • Espro</p>
+              <p class="text-gray-500 text-xs mono">mar/2018 — jul/2021</p>
+            </div>
+          </div>
+          <ul class="space-y-2 text-sm text-gray-400 mb-4">
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 mt-1">▸</span>
+              <span>Rotinas administrativas, controladoria e apoio financeiro</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 mt-1">▸</span>
+              <span>Organização de processos e documentação</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 mt-1">▸</span>
+              <span>Trabalho em equipe e visão organizacional</span>
+            </li>
           </ul>
-          <div class="mt-3 flex flex-wrap gap-2">
-            <span class="text-xs rounded-full bg-white/10 px-2 py-1">Processos</span>
-            <span class="text-xs rounded-full bg-white/10 px-2 py-1">Controladoria</span>
-            <span class="text-xs rounded-full bg-white/10 px-2 py-1">Financeiro</span>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag">Processos</span>
+            <span class="tag">Controladoria</span>
+            <span class="tag">Financeiro</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Projetos (cards com hover + filtro) -->
-  <section id="projetos" class="border-y border-white/10 bg-white/5">
-    <div class="max-w-7xl mx-auto px-4 py-16">
-      <div class="flex items-center justify-between gap-3 flex-wrap">
-        <h3 class="text-2xl font-semibold">Projetos</h3>
-        <input id="search" placeholder="Buscar por nome ou tag" class="w-full sm:w-80 rounded-xl bg-slate-900 border border-white/10 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500/40" />
+  <!-- Projetos Section -->
+  <section id="projetos" class="py-20 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="section-divider mb-16"></div>
+
+      <div class="text-center mb-12 animate-on-scroll">
+        <h2 class="title-display text-4xl md:text-5xl mb-4">Projetos</h2>
+        <p class="text-gray-400 mb-8">Trabalhos realizados e soluções desenvolvidas</p>
+        
+        <input 
+          type="text" 
+          id="searchInput" 
+          placeholder="🔍 Buscar projetos por nome ou tecnologia..." 
+          class="search-input"
+        />
       </div>
-      <div id="projects" class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <div class="project group rounded-2xl bg-white/5 border border-white/10 p-5 transition hover:-translate-y-1 hover:bg-white/10" data-title="Integração WMS x ERP" data-tag="Integracao">
-          <div class="flex items-center justify-between">
-            <p class="font-medium">Integração WMS x ERP</p>
-            <span class="text-xs rounded-full bg-indigo-500/15 border border-indigo-400/30 px-2 py-1">Integração</span>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="projectsGrid">
+        <!-- Integração WMS x ERP -->
+        <div class="card-premium animate-on-scroll project-card" data-title="Integração WMS x ERP" data-tags="integracao webhook api" style="animation-delay: 0.1s;">
+          <div class="flex items-start justify-between mb-4">
+            <h3 class="text-xl font-semibold">Integração WMS x ERP</h3>
+            <span class="tag">Integração</span>
           </div>
-          <p class="text-sm text-slate-300 mt-2">Webhook e API para sincronizar pedidos e status.</p>
-          <a href="https://www.linkedin.com/posts/wesley-fs_advpl-protheus-integraaexaetodesistemas-activity-7422609976432553985-EbWE?utm_source=share&utm_medium=member_desktop&rcm=ACoAAESXkmQBSlkI4sHVQDb76P8WfX0tIfstpiU" class="mt-3 inline-block text-sm font-medium text-indigo-300 group-hover:underline">Ver projeto →</a>
+          <p class="text-gray-400 text-sm mb-4">
+            Desenvolvimento de webhook e API para sincronizar pedidos e status entre sistema WMS e ERP Protheus em tempo real.
+          </p>
+          <a href="https://www.linkedin.com/posts/wesley-fs_advpl-protheus-integraaexaetodesistemas-activity-7422609976432553985-EbWE" target="_blank" class="btn-secondary text-sm">
+            Ver projeto
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+          </a>
         </div>
-        <div class="project group rounded-2xl bg-white/5 border border-white/10 p-5 transition hover:-translate-y-1 hover:bg-white/10" data-title="Geração de DANFE" data-tag="Fiscal">
-          <div class="flex items-center justify-between">
-            <p class="font-medium">Implementação Módulo de Vendas</p>
-            <span class="text-xs rounded-full bg-fuchsia-500/15 border border-fuchsia-400/30 px-2 py-1">ERP</span>
+
+        <!-- Módulo de Vendas -->
+        <div class="card-premium animate-on-scroll project-card" data-title="Implementação Módulo de Vendas" data-tags="erp protheus vendas" style="animation-delay: 0.2s;">
+          <div class="flex items-start justify-between mb-4">
+            <h3 class="text-xl font-semibold">Módulo de Vendas SIGALOJA</h3>
+            <span class="tag">ERP</span>
           </div>
-          <p class="text-sm text-slate-300 mt-2">Configuração e treinamento do módulo SIGALOJA no ERP Protheus.</p>
-          <a href="https://www.linkedin.com/posts/wesley-fs_conclu%C3%AD-a-implementa%C3%A7%C3%A3o-do-m%C3%B3dulo-de-controle-activity-7421548410706681856-AYiJ?utm_source=share&utm_medium=member_desktop&rcm=ACoAAESXkmQBSlkI4sHVQDb76P8WfX0tIfstpiU" class="mt-3 inline-block text-sm font-medium text-fuchsia-300 group-hover:underline">Ver projeto →</a>
+          <p class="text-gray-400 text-sm mb-4">
+            Configuração completa e treinamento de usuários para o módulo SIGALOJA no ERP Protheus.
+          </p>
+          <a href="https://www.linkedin.com/posts/wesley-fs_conclu%C3%AD-a-implementa%C3%A7%C3%A3o-do-m%C3%B3dulo-de-controle-activity-7421548410706681856-AYiJ" target="_blank" class="btn-secondary text-sm">
+            Ver projeto
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+          </a>
         </div>
-        <div class="project group rounded-2xl bg-white/5 border border-white/10 p-5 transition hover:-translate-y-1 hover:bg-white/10" data-title="Automação Protheus" data-tag="ERP">
-          <div class="flex items-center justify-between">
-            <p class="font-medium">XML View</p>
-            <span class="text-xs rounded-full bg-emerald-500/15 border border-emerald-400/30 px-2 py-1">Desenvolvimento</span>
+
+        <!-- XML View -->
+        <div class="card-premium animate-on-scroll project-card" data-title="XML View" data-tags="python desenvolvimento fiscal" style="animation-delay: 0.3s;">
+          <div class="flex items-start justify-between mb-4">
+            <h3 class="text-xl font-semibold">XML View</h3>
+            <span class="tag">Desenvolvimento</span>
           </div>
-          <p class="text-sm text-slate-300 mt-2">Sistema de visualização de XMLs de maneira otimizada para lançamentos fiscais.</p>
-          <a href="https://www.linkedin.com/posts/wesley-fs_lc1-python-contaerbil-activity-7327828922979520512-DIo4?utm_source=share&utm_medium=member_desktop&rcm=ACoAAESXkmQBSlkI4sHVQDb76P8WfX0tIfstpiU" class="mt-3 inline-block text-sm font-medium text-emerald-300 group-hover:underline">Ver projeto →</a>
+          <p class="text-gray-400 text-sm mb-4">
+            Sistema de visualização de XMLs de maneira otimizada para facilitar lançamentos fiscais e contábeis.
+          </p>
+          <a href="https://www.linkedin.com/posts/wesley-fs_lc1-python-contaerbil-activity-7327828922979520512-DIo4" target="_blank" class="btn-secondary text-sm">
+            Ver projeto
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+          </a>
         </div>
-        <div class="project group rounded-2xl bg-white/5 border border-white/10 p-5 transition hover:-translate-y-1 hover:bg-white/10" data-title="Automação Protheus" data-tag="ERP">
-          <div class="flex items-center justify-between">
-            <p class="font-medium">Automação de Processos</p>
-            <span class="text-xs rounded-full bg-orange-500/15 border border-orange-400/30 px-2 py-1">Desenvolvimento</span>
+
+        <!-- Automação de Processos -->
+        <div class="card-premium animate-on-scroll project-card" data-title="Automação de Processos" data-tags="python automacao rpa" style="animation-delay: 0.4s;">
+          <div class="flex items-start justify-between mb-4">
+            <h3 class="text-xl font-semibold">Automação de Processos</h3>
+            <span class="tag">Automação</span>
           </div>
-          <p class="text-sm text-slate-300 mt-2">Automação de processos repetitivos sem necessidade de acesso ao banco de dados</p>
-          <a href="https://www.linkedin.com/posts/wesley-fs_automaaexaeto-produtividade-python-activity-7292364417499848704-AmXJ?utm_source=share&utm_medium=member_desktop&rcm=ACoAAESXkmQBSlkI4sHVQDb76P8WfX0tIfstpiU" class="mt-3 inline-block text-sm font-medium text-orange-300 group-hover:underline">Ver projeto →</a>
+          <p class="text-gray-400 text-sm mb-4">
+            Automação de processos repetitivos sem necessidade de acesso ao banco de dados, aumentando produtividade.
+          </p>
+          <a href="https://www.linkedin.com/posts/wesley-fs_automaaexaeto-produtividade-python-activity-7292364417499848704-AmXJ" target="_blank" class="btn-secondary text-sm">
+            Ver projeto
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+          </a>
         </div>
+      </div>
+
+      <!-- Mensagem quando não há resultados -->
+      <div id="noResults" class="text-center py-12 hidden">
+        <p class="text-gray-400">Nenhum projeto encontrado com esse critério de busca.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contato Section -->
+  <section id="contato" class="py-20 px-6 bg-gradient-to-b from-transparent to-black/30">
+    <div class="max-w-4xl mx-auto text-center animate-on-scroll">
+      <h2 class="title-display text-4xl md:text-5xl mb-6">Vamos Conversar?</h2>
+      <p class="text-lg text-gray-400 mb-8">
+        Estou sempre aberto a novos desafios e oportunidades. Entre em contato!
+      </p>
+      
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="mailto:wesleyferrari123@gmail.com" class="btn-primary">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+          Enviar Email
+        </a>
+        <a href="https://www.linkedin.com/in/wesley-fs/" target="_blank" class="btn-secondary">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          LinkedIn
+        </a>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="border-t border-white/10">
-    <div class="max-w-7xl mx-auto px-4 py-8 text-sm flex items-center justify-between text-slate-400">
-      <span>© <span id="year"></span> Wesley Silva</span>
+  <footer class="py-8 px-6 border-t border-white/10">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-gray-500 mono">
+        © <span id="year"></span> Wesley Silva. Todos os direitos reservados.
+      </p>
+      <div class="flex gap-6">
+        <a href="https://github.com/Wesley-FS" target="_blank" class="text-gray-500 hover:text-cyan-400 transition-colors">GitHub</a>
+        <a href="https://www.linkedin.com/in/wesley-fs/" target="_blank" class="text-gray-500 hover:text-cyan-400 transition-colors">LinkedIn</a>
+        <a href="mailto:wesleyferrari123@gmail.com" class="text-gray-500 hover:text-cyan-400 transition-colors">Email</a>
+      </div>
     </div>
   </footer>
 
+  <!-- JavaScript -->
   <script>
-    // Ano automático
+    // Ano dinâmico
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Filtro de projetos
-    const input = document.getElementById('search');
-    const cards = Array.from(document.querySelectorAll('.project'));
-    input.addEventListener('input', (e) => {
-      const q = e.target.value.toLowerCase();
-      cards.forEach(card => {
-        const title = card.dataset.title.toLowerCase();
-        const tag = card.dataset.tag.toLowerCase();
-        card.style.display = (title.includes(q) || tag.includes(q)) ? 'block' : 'none';
+    // Cursor customizado (apenas desktop)
+    if (window.innerWidth > 768) {
+      const cursorDot = document.querySelector('.cursor-dot');
+      const cursorRing = document.querySelector('.cursor-ring');
+
+      document.addEventListener('mousemove', (e) => {
+        cursorDot.style.left = e.clientX + 'px';
+        cursorDot.style.top = e.clientY + 'px';
+        
+        setTimeout(() => {
+          cursorRing.style.left = e.clientX - 16 + 'px';
+          cursorRing.style.top = e.clientY - 16 + 'px';
+        }, 50);
+      });
+    }
+
+    // Menu mobile
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+    const menuLinks = document.querySelectorAll('.menu-link');
+
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      mobileOverlay.classList.toggle('active');
+      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+
+    mobileOverlay.addEventListener('click', () => {
+      menuToggle.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      mobileOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    menuLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        mobileOverlay.classList.remove('active');
+        document.body.style.overflow = '';
       });
     });
+
+    // Scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Header scroll effect
+    let lastScroll = 0;
+    const header = document.querySelector('header');
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      
+      if (currentScroll > 100) {
+        header.style.padding = '12px 0';
+      } else {
+        header.style.padding = '16px 0';
+      }
+      
+      lastScroll = currentScroll;
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const offsetTop = target.offsetTop - 80;
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Filtro de projetos
+    const searchInput = document.getElementById('searchInput');
+    const projectCards = document.querySelectorAll('.project-card');
+    const noResults = document.getElementById('noResults');
+
+    searchInput.addEventListener('input', (e) => {
+      const searchTerm = e.target.value.toLowerCase();
+      let visibleCount = 0;
+
+      projectCards.forEach(card => {
+        const title = card.dataset.title.toLowerCase();
+        const tags = card.dataset.tags.toLowerCase();
+        
+        if (title.includes(searchTerm) || tags.includes(searchTerm)) {
+          card.style.display = 'block';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    });
+
+    // Partículas no background
+    const particlesContainer = document.getElementById('particles');
+    const particleCount = 30;
+
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 20 + 's';
+      particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+      particlesContainer.appendChild(particle);
+    }
   </script>
 </body>
 </html>
